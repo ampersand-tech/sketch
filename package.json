@@ -30,5 +30,9 @@
     "mocha": "^5.2.0",
     "ts-node": "^7.0.0",
     "typescript": "^2.9.2"
+  },
+  "dependencies": {
+    "amper-utils": "git+ssh://git@github.com:ampersandtech/utils.git",
+    "safe-raf": "git+ssh://git@github.com:ampersandtech/safe-raf.git"
   }
 }
