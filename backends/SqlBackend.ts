@@ -2,9 +2,10 @@
 * Copyright 2018-present Ampersand Technologies, Inc.
 */
 
-import { AccountID, BackingContext, SketchBackendInterface, UserInfo } from '../lib/index2';
+import { AccountID, BackingContext, SketchBackendInterface, UserInfo } from '../lib/index';
 
 import { wrap } from 'amper-utils/dist2017/promiseUtils';
+import { Stash } from 'amper-utils/dist2017/types';
 
 export interface SqlInterface {
   setupTable(tableDesc, onCreateFunc?): SqlTable;
@@ -39,13 +40,12 @@ export interface SqlInterface {
 let Sql: SqlInterface;
 
 export class SketchSqlBackend extends SketchBackendInterface {
+  async init() {
+    // TODO setup tables
+  }
+
   async getUser(accountID: AccountID): Promise<UserInfo> {
-    return {
-      id: accountID,
-      access: '',
-      type: '',
-      tableSubs: {},
-    };
+    return await wrap(AccountTokenCache.findByAccountID, ctx, accountID, 'user');
   }
 
   async startTransaction(ctx: BackingContext, name: string) {
@@ -89,6 +89,15 @@ export class SketchSqlBackend extends SketchBackendInterface {
     } finally {
       Sql.free(ctx.sql);
       ctx.sql = Sql.allocShared(ctx, ctx.readOnly || false);
+    }
+  }
+
+  async mergeAndWriteFeed(ctx: BackingContext, feedEntries: Stash[]) {
+    const feedToWrite = Feed.mergeFeedEntries(feedEntries);
+
+    for (let i = 0; i < feedToWrite.length; ++i) {
+      const feedData = feedToWrite[i];
+      await wrap(Feed.addMulti, ctx, feedData.accountIDs, feedData.keys, feedData.fields, feedData.clientKey);
     }
   }
 }

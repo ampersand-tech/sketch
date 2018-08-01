@@ -451,21 +451,6 @@ export async function replayAction(actionName: string, sketchActionData: ActionP
   gPostActionHook && gPostActionHook();
 }
 
-export async function mergeAndWriteFeed(ctx: ServerContext) {
-  if (!Feed) {
-    return;
-  }
-
-  const sctx = ctx as SketchServerContext;
-  const feedToWrite = Feed.mergeFeedEntries(sctx.sketchFeedToWrite);
-  sctx.sketchFeedToWrite = undefined;
-
-  for (let i = 0; i < feedToWrite.length; ++i) {
-    const feedData = feedToWrite[i];
-    await wrap(Feed.addMulti, sctx, feedData.accountIDs, feedData.keys, feedData.fields, feedData.clientKey);
-  }
-}
-
 function tagsWithClientInfo(ctx: SketchServerContext, tags: Stash) {
   const clientInfo = ctx ? ctx.clientInfo : null;
   const fullTags = clientInfo ? ObjUtils.clone(clientInfo) : {};

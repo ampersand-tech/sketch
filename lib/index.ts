@@ -17,28 +17,30 @@ export type BackingContext = Stash|null;
 export interface UserInfo {
   id: AccountID;
   access: string;
-  type: string;
+  userType: string;
   tableSubs: Stash;
 }
 
 export abstract class SketchBackendInterface {
+  abstract async init();
   abstract async getUser(accountID: AccountID): Promise<UserInfo>;
   abstract async startTransaction(ctx: BackingContext, name: string);
   abstract async commitTransaction(ctx: BackingContext);
   abstract async rollbackTransaction(err: any, ctx: BackingContext);
+  abstract async mergeAndWriteFeed(ctx: BackingContext, feedEntries: Stash[]);
 }
 
 class SketchBaseContext {
   public user: UserInfo = {
     id: '' as AccountID,
     access: '',
-    type: '',
+    userType: '',
     tableSubs: {},
   };
 
   private readOnly = false;
   private activeTransactions: string[] = [];
-  private feedToWrite: undefined | any[];
+  private feedToWrite: undefined | Stash[];
   rowLocks: undefined | Stash;
 
   constructor(
@@ -46,11 +48,9 @@ class SketchBaseContext {
     protected readonly backingContext: BackingContext,
     protected readonly parentContext: SketchContext | undefined,
   ) {
-    if (this.parentContext && this.parentContext.readOnly) {
-      this.readOnly = true;
-    }
-    if (this.backingContext && this.backingContext.user) {
-      this.user = this.backingContext.user;
+    if (this.parentContext) {
+      this.readOnly = this.parentContext.readOnly;
+      this.user = this.parentContext.user;
     }
   }
 
@@ -96,16 +96,17 @@ class SketchBaseContext {
       return;
     }
 
+    const feedEntries = this.feedToWrite!;
+    this.feedToWrite = undefined;
     this.rowLocks = undefined;
 
     if (err) {
-      this.feedToWrite = undefined;
       await this.backend.rollbackTransaction(err, this.backingContext);
       return;
     }
 
     await this.backend.commitTransaction(this.backingContext);
-    await SketchAction.mergeAndWriteFeed(this.feedToWrite);
+    await this.backend.mergeAndWriteFeed(this.backingContext, feedEntries);
   }
 
   async runInTransaction<T>(name: string, func: (ctx: SketchBaseContext) => Promise<T>): Promise<T> {
@@ -188,6 +189,7 @@ export class Sketch {
   }
 
   async init() {
+    await this.backend.init();
   }
 
   async asUser(backingContext: BackingContext, accountID: AccountID) {

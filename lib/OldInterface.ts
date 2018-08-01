@@ -7,7 +7,7 @@ import * as DataHelpers from './DataHelpers';
 import * as DataReader from './DataReader';
 import * as DataWriter from './DataWriter';
 import * as SketchProgram from './SketchProgram';
-import { AccountTokenCacheInterface, OptMask, SketchServerContext, SqlInterface } from './SketchTypes';
+import { AccountTokenCacheInterface, OptMask, SketchServerContext } from './SketchTypes';
 import * as TableDef from './TableDef';
 import * as Types from './types';
 
@@ -28,13 +28,6 @@ export const ACCOUNT_MASK = ObjUtils.objectMakeImmutable({
   email: 1,
 });
 
-
-declare var global: any;
-
-try {
-  global._mori = global._mori || {};
-} catch (_) {
-}
 
 let gIsServer = false;
 let gIsClient = false;
@@ -802,98 +795,6 @@ export async function getMemberAccountIDs(ctx: ServerContext, path: string[]) {
   // shared lock for read
   await DataReader.lockMembership(sctx, sketchTable, knownKeys, false);
   return await DataReader.lookupMemberAccountIDs(sctx, sketchTable, knownKeys);
-}
-
-export async function startTransaction(ctx: ServerContext, name: string) {
-  const sctx = validateCall(ctx, null, true);
-  if (!gIsServer) {
-    throw new Error('startTransaction can only run on the server');
-  }
-  if (sctx.readOnly) {
-    console.error('Sketch: startTransaction called in a read-only context');
-    throw new Error('internalServerError');
-  }
-
-  sctx.sketchTransactions = sctx.sketchTransactions || [];
-  const isInTransaction = sctx.sketchTransactions.length > 0;
-  sctx.sketchTransactions.push(name);
-
-  if (isInTransaction) {
-    return;
-  }
-
-  if (!sctx.sql) {
-    throw new Error('offline');
-  }
-
-  if (sctx.sql.transact) {
-    console.error('Sketch: startTransaction called inside a non-sketch transaction');
-    throw new Error('internalServerError');
-  }
-  if (sctx.sketchActionData) {
-    console.error('Sketch: startTransaction called inside a sketch action');
-    throw new Error('internalServerError');
-  }
-  sctx.sketchFeedToWrite = [];
-
-  // used to track what rows have been locked with lockMembership() during this transaction
-  sctx.sketchLocks = {};
-
-  if (Sql.isTransactLink(sctx.sql)) {
-    // already using a transacted link
-    return await Sql.startTransaction(sctx.sql, name);
-  }
-
-  // need to allocate a transacted link
-  const sqlLink = await wrap(Sql.allocTransacted, ctx);
-  sctx.sql = sqlLink;
-  return await Sql.startTransaction(sctx.sql, name);
-}
-
-export function endTransaction(ctx: ServerContext, name: string, err: any, data: any) {
-  const sctx = validateCall(ctx, null, true);
-  if (!gIsServer) {
-    throw new Error('endTransaction can only run on the server');
-  }
-
-  sctx.sketchTransactions = sctx.sketchTransactions || [];
-  if (sctx.sketchTransactions.length === 0) {
-    console.error('Sketch: endTransaction called outside a transaction');
-    throw new Error('internalServerError');
-  }
-
-  if (sctx.sketchTransactions[sctx.sketchTransactions.length - 1] !== name) {
-    console.error('Sketch: endTransaction called outside a transaction');
-    throw new Error('internalServerError');
-  }
-
-  sctx.sketchTransactions.pop();
-  if (sctx.sketchTransactions.length) {
-    // still inside a transaction
-    return cb(err, data);
-  }
-
-  sctx.sketchLocks = undefined;
-
-  if (err) {
-    sctx.sketchFeedToWrite = undefined;
-    return Sql.rollback(sctx.sql, err, function(err2) {
-      Sql.free(sctx.sql);
-      sctx.sql = Sql.allocShared(ctx, sctx.readOnly || false);
-      cb(err2);
-    });
-  }
-
-  Sql.commit(sctx.sql, function(err1) {
-    Sql.free(sctx.sql);
-    sctx.sql = Sql.allocShared(ctx, sctx.readOnly || false);
-    if (err1) {
-      return cb(err1);
-    }
-    Actions.mergeAndWriteFeed(sctx, function(err2) {
-      cb(err2, data);
-    });
-  });
 }
 
 
