@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ampersandtech/sketch.git"
+    "url": "git+https://github.com/ampersand-tech/sketch.git"
   },
   "keywords": [
     "sketch",
@@ -19,9 +19,9 @@
   "author": "Ampersand Technologies, Inc.",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ampersandtech/sketch/issues"
+    "url": "https://github.com/ampersand-tech/sketch/issues"
   },
-  "homepage": "https://github.com/ampersandtech/sketch#readme",
+  "homepage": "https://github.com/ampersand-tech/sketch#readme",
   "devDependencies": {
     "@types/chai": "^4.1.4",
     "@types/mocha": "^5.2.5",
