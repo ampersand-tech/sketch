@@ -5,8 +5,8 @@
 import * as TableDef from './TableDef';
 import * as Types from './types';
 
-import * as ObjUtils from 'amper-utils/dist2017/objUtils';
-import { Stash, StashOf } from 'amper-utils/dist2017/types';
+import * as ObjUtils from 'amper-utils/dist/objUtils';
+import { Stash, StashOf } from 'amper-utils/dist/types';
 
 interface FieldFilter {
   allowMemberData?: boolean;

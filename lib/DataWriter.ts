@@ -9,9 +9,9 @@ import * as TableDef from './TableDef';
 import { SketchTable } from './TableDef';
 import * as Types from './types';
 
-import * as ObjUtils from 'amper-utils/dist2017/objUtils';
-import { wrap } from 'amper-utils/dist2017/promiseUtils';
-import { Stash, StashOf } from 'amper-utils/dist2017/types';
+import * as ObjUtils from 'amper-utils/dist/objUtils';
+import { wrap } from 'amper-utils/dist/promiseUtils';
+import { Stash, StashOf } from 'amper-utils/dist/types';
 
 
 const FEED_ACTIONS = {

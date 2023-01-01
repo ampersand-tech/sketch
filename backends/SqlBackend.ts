@@ -4,8 +4,8 @@
 
 import { AccountID, BackingContext, SketchBackendInterface, UserInfo } from '../lib/index';
 
-import { wrap } from 'amper-utils/dist2017/promiseUtils';
-import { Stash } from 'amper-utils/dist2017/types';
+import { wrap } from 'amper-utils/dist/promiseUtils';
+import { Stash } from 'amper-utils/dist/types';
 
 export interface SqlInterface {
   setupTable(tableDesc, onCreateFunc?): SqlTable;

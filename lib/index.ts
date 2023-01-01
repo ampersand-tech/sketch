@@ -2,7 +2,7 @@
 * Copyright 2018-present Ampersand Technologies, Inc.
 */
 
-import { Stash } from 'amper-utils/dist2017/types';
+import { Stash } from 'amper-utils/dist/types';
 
 export type SketchWildcard = '*';
 export type SketchMask = number | SketchWildcard | { [k: string]: SketchMask };

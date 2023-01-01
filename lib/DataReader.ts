@@ -7,9 +7,9 @@ import * as Sketch from './index';
 import { SketchContext, SketchServerContext, SqlInterface, SqlTable } from './SketchTypes';
 import * as SketchTable from './TableDef';
 
-import * as ErrorUtils from 'amper-utils/dist2017/errorUtils';
-import { ParallelQueue, wrap } from 'amper-utils/dist2017/promiseUtils';
-import { Stash, StashOf } from 'amper-utils/dist2017/types';
+import * as ErrorUtils from 'amper-utils/dist/errorUtils';
+import { ParallelQueue, wrap } from 'amper-utils/dist/promiseUtils';
+import { Stash, StashOf } from 'amper-utils/dist/types';
 
 
 let gIsClient = false;

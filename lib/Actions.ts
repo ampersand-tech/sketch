@@ -5,11 +5,11 @@
 import { ProgramBuilder, SketchProgram, buildSketchActionProgram } from './SketchProgram';
 import * as Types from './types';
 
-import * as ErrorUtils from 'amper-utils/dist2017/errorUtils';
-import * as ObjUtils from 'amper-utils/dist2017/objUtils';
-import { wrap, wrapMember } from 'amper-utils/dist2017/promiseUtils';
-import * as StringUtils from 'amper-utils/dist2017/stringUtils';
-import { Stash, StashOf } from 'amper-utils/dist2017/types';
+import * as ErrorUtils from 'amper-utils/dist/errorUtils';
+import * as ObjUtils from 'amper-utils/dist/objUtils';
+import { wrap, wrapMember } from 'amper-utils/dist/promiseUtils';
+import * as StringUtils from 'amper-utils/dist/stringUtils';
+import { Stash, StashOf } from 'amper-utils/dist/types';
 //import * as Perms from 'overlib/shared/perms';
 
 import {

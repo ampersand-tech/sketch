@@ -4,7 +4,7 @@
 
 import { AccountID, BackingContext, SketchBackendInterface, UserInfo } from '../lib/index';
 
-import * as ObjUtils from 'amper-utils/dist2017/objUtils';
+import * as ObjUtils from 'amper-utils/dist/objUtils';
 
 let DataStore;
 

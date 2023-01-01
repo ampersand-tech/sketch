@@ -4,7 +4,7 @@
 
 import { Type, Schema } from './types';
 
-import { Stash, StashOf } from 'amper-utils/dist2017/types';
+import { Stash, StashOf } from 'amper-utils/dist/types';
 
 export interface ActionPayload {
   argMap: Stash;

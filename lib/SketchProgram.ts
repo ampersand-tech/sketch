@@ -11,9 +11,9 @@ import * as Sketch from './index';
 import { AccountTokenCacheInterface, SketchMask } from './SketchTypes';
 import * as Types from './types';
 
-import * as JsonUtils from 'amper-utils/dist2017/jsonUtils';
-import * as ObjUtils from 'amper-utils/dist2017/objUtils';
-import { absurd, Stash, StashOf } from 'amper-utils/dist2017/types';
+import * as JsonUtils from 'amper-utils/dist/jsonUtils';
+import * as ObjUtils from 'amper-utils/dist/objUtils';
+import { absurd, Stash, StashOf } from 'amper-utils/dist/types';
 
 let AccountTokenCache: AccountTokenCacheInterface | undefined;
 

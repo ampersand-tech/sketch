@@ -11,10 +11,10 @@ import { AccountTokenCacheInterface, OptMask, SketchServerContext } from './Sket
 import * as TableDef from './TableDef';
 import * as Types from './types';
 
-import * as ErrorUtils from 'amper-utils/dist2017/errorUtils';
-import * as ObjUtils from 'amper-utils/dist2017/objUtils';
-import { ignoreError } from 'amper-utils/dist2017/promiseUtils';
-import { Stash } from 'amper-utils/dist2017/types';
+import * as ErrorUtils from 'amper-utils/dist/errorUtils';
+import * as ObjUtils from 'amper-utils/dist/objUtils';
+import { ignoreError } from 'amper-utils/dist/promiseUtils';
+import { Stash } from 'amper-utils/dist/types';
 
 
 let DataStore;
