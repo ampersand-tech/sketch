@@ -142,6 +142,15 @@ aggregate-error@^3.0.1:
     clean-stack "^2.0.0"
     indent-string "^4.0.0"
 
+"amper-utils@git+ssh://git@github.com/ampersand-tech/amper-utils.git":
+  version "1.2.0"
+  uid "91aff27757f626c671d72967e52fcc3ab238d5fb"
+  resolved "git+ssh://git@github.com/ampersand-tech/amper-utils.git#91aff27757f626c671d72967e52fcc3ab238d5fb"
+
+"amper-utils@git+ssh://git@github.com:ampersand-tech/amper-utils.git":
+  version "1.2.0"
+  resolved "git+ssh://git@github.com:ampersand-tech/amper-utils.git#91aff27757f626c671d72967e52fcc3ab238d5fb"
+
 ansi-styles@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-3.2.1.tgz#41fbb20243e50b12be0f04b8dedbf07520ce841d"
@@ -1652,6 +1661,12 @@ ret@~0.1.10:
   version "0.1.15"
   resolved "https://registry.yarnpkg.com/ret/-/ret-0.1.15.tgz#b8a4825d5bdb1fc3f6f53c2bc33f81388681c7bc"
   integrity sha512-TTlYpa+OL+vMMNG24xSlQGEJ3B/RzEfUlLct7b5G/ytav+wPrplCpVMFuwzXbkecJrb6IYo1iFb0S9v37754mg==
+
+"safe-raf@git+ssh://git@github.com:ampersand-tech/safe-raf.git":
+  version "1.1.1"
+  resolved "git+ssh://git@github.com:ampersand-tech/safe-raf.git#09a6d56e049925750e2d114233a65fd5380aa373"
+  dependencies:
+    amper-utils "git+ssh://git@github.com/ampersand-tech/amper-utils.git"
 
 safe-regex-test@^1.0.0:
   version "1.0.0"
