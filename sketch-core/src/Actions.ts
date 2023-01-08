@@ -4,13 +4,12 @@
 
 import { ProgramBuilder, SketchProgram, buildSketchActionProgram } from './SketchProgram';
 import * as Types from './SketchTypes';
+import * as Perms from './perms';
 
 import * as ErrorUtils from 'amper-utils/dist/errorUtils';
 import * as ObjUtils from 'amper-utils/dist/objUtils';
-import { wrap, wrapMember } from 'amper-utils/dist/promiseUtils';
 import * as StringUtils from 'amper-utils/dist/stringUtils';
-import { Stash, StashOf } from 'amper-utils/dist/types';
-//import * as Perms from 'overlib/shared/perms';
+import { Stash } from 'amper-utils/dist/types';
 
 import {
   ActionPayload,
@@ -70,7 +69,7 @@ interface ActionDef {
 
 type ProgBuildFunc = (prog: ProgramBuilder) => void;
 
-const gActions: StashOf<ActionDef> = {};
+const gActions: Stash<ActionDef> = {};
 
 
 export function initClient(dataStoreModule, dbUtilModule) {
@@ -681,7 +680,7 @@ export function serverTime(ctx: Context): number {
   return sctx.sketchActionData.serverTime;
 }
 
-export type ActionSchema = StashOf<{
+export type ActionSchema = Stash<{
   names: string[];
   types: Util.ParamTypes;
 }>;

@@ -12,7 +12,7 @@ interface _AccountIDTag { ___AccountID: undefined; }
 export type AccountID = _AccountIDTag & string;
 
 
-export type BackingContext = Stash|null;
+export type BackingContext = Stash | null;
 
 export interface UserInfo {
   id: AccountID;
@@ -22,12 +22,12 @@ export interface UserInfo {
 }
 
 export abstract class SketchBackendInterface {
-  abstract async init();
-  abstract async getUser(accountID: AccountID): Promise<UserInfo>;
-  abstract async startTransaction(ctx: BackingContext, name: string);
-  abstract async commitTransaction(ctx: BackingContext);
-  abstract async rollbackTransaction(err: any, ctx: BackingContext);
-  abstract async mergeAndWriteFeed(ctx: BackingContext, feedEntries: Stash[]);
+  abstract init();
+  abstract getUser(accountID: AccountID): Promise<UserInfo>;
+  abstract startTransaction(ctx: BackingContext, name: string);
+  abstract commitTransaction(ctx: BackingContext);
+  abstract rollbackTransaction(err: any, ctx: BackingContext);
+  abstract mergeAndWriteFeed(ctx: BackingContext, feedEntries: Stash[]);
 }
 
 class SketchBaseContext {
@@ -112,7 +112,7 @@ class SketchBaseContext {
   async runInTransaction<T>(name: string, func: (ctx: SketchBaseContext) => Promise<T>): Promise<T> {
     await this.startTransaction(name);
 
-    let res: T|undefined;
+    let res: T | undefined;
     let err: any;
     try {
       res = await func(this);
@@ -136,10 +136,10 @@ class SketchBaseContext {
   async initializeData(path: string[], initPath = false) {
   }
 
-  async updateData(path: string[], value: Stash|string|number|null) {
+  async updateData(path: string[], value: Stash | string | number | null) {
   }
 
-  async replaceData(path: string[], value: Stash|string|number|null) {
+  async replaceData(path: string[], value: Stash | string | number | null) {
   }
 
   async removeData(path: string[]) {
@@ -153,7 +153,7 @@ class SketchBaseContext {
 }
 
 class SketchContext extends SketchBaseContext {
-  constructor(backend: SketchBackendInterface, backingContext: BackingContext, parentContext: SketchContext|undefined) {
+  constructor(backend: SketchBackendInterface, backingContext: BackingContext, parentContext: SketchContext | undefined) {
     super(backend, backingContext, parentContext);
   }
 

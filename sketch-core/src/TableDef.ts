@@ -4,14 +4,13 @@
 
 import * as ObjSchema from './objSchema';
 import * as SketchTypes from './SketchTypes';
-import * as Types from './SketchTypes';
+import * as Types from './types';
+import * as Perms from './perms';
 
 import * as JsonUtils from 'amper-utils/dist/jsonUtils';
 import * as ObjUtils from 'amper-utils/dist/objUtils';
 import * as StringUtils from 'amper-utils/dist/stringUtils';
 import { Stash } from 'amper-utils/dist/types';
-//import * as Perms from 'overlib/shared/perms';
-
 
 interface InField {
   name: string;
