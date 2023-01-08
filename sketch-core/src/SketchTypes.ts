@@ -4,12 +4,13 @@
 
 import { Type, Schema } from './types';
 
-import { Stash, StashOf } from 'amper-utils/dist/types';
+import { Stash } from 'amper-utils/dist/types';
+import { PermFunc } from './perms';
 
 export interface ActionPayload {
   argMap: Stash;
   clientKey: string;
-  clientUUIDs: StashOf<string>;
+  clientUUIDs: Stash<string>;
   clientTime?: number;
   serverTime?: number;
 }
@@ -53,7 +54,7 @@ export interface SqlTable {
   primaryKeys: string[];
   isParallelStore: boolean;
   schema: Schema;
-  indexes: [StashOf<1>, IndexParams][];
+  indexes: [Stash<1>, IndexParams][];
 }
 
 export interface TableOptions {
