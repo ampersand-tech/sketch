@@ -1,17 +1,13 @@
 {
-  "name": "sketch",
-  "version": "0.0.0",
-  "description": "Predictive DB",
-  "private": true,
-  "workspaces": [
-    "sketch-core",
-    "sketch-server-sql",
-    "sketch-client"
-  ],
+  "name": "sketch-server-sql",
+  "version": "1.0.0",
+  "description": "Predictive DB - core technology",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "workspaces-run --parallel -- yarn build",
-    "watch": "workspaces-run --parallel -- yarn watch",
-    "test": "workspaces-run --parallel -- yarn test"
+    "build": "tsc --build tsconfig.json",
+    "watch": "tsc --build tsconfig.json --watch",
+    "test": "mocha -r ts-node/register test/**/*-test.ts"
   },
   "repository": {
     "type": "git",
@@ -34,7 +30,10 @@
     "chai": "^4.1.2",
     "mocha": "^5.2.0",
     "ts-node": "^10.9.1",
-    "typescript": "^4.9.4",
-    "workspaces-run": "^1.0.1"
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "amper-utils": "git+ssh://git@github.com:ampersand-tech/amper-utils.git",
+    "safe-raf": "git+ssh://git@github.com:ampersand-tech/safe-raf.git"
   }
 }

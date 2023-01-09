@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "rootDir": "./lib",
-    "baseUrl": "./lib",
+    "rootDir": "src",
+    "baseUrl": "src",
     "alwaysStrict": true,
     "strictNullChecks": true,
     "noImplicitAny": false,
@@ -16,10 +16,12 @@
     "jsx": "react",
     "outDir": "./dist",
     "paths": {
-      "*": ["*"]
+      "*": [
+        "*"
+      ]
     }
   },
   "include": [
-    "./lib/*"
+    "src/*"
   ]
 }
